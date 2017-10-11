@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <title>第十三章 事件</title>
+    <link rel="stylesheet" href="">
+    <script type="text/javascript" src=""></script>
+  </head>
+  <body>
+		<input type="button" name="" value="Click Me" onclick="alert(&quot;Clicked&quot;);">
+		<input type="button" name="" value="Click Me" onclick="showMessage();">
+		<input type="button" name="" value="显示事件类型" onclick="alert(event.type);">
+		<input id="myBtn1" type="button" name="" value="DOM0级事件处理程序">
+		<input id="myBtn2" type="button" name="" value="DOM2级事件处理程序">
+		<input id="myBtn3" type="button" name="" value="跨浏览器的事件处理程序">
+		<input id="myBtn4" type="button" name="" value="event对象">
+		<input id="myBtn5" type="button" name="" value="一个函数处理多个事件">
+		<input id="myBtn6" type="button" name="" value="跨浏览器的事件对象">
+		<a href="http://www.baidu.com" id="link">百度</a>
+		<br>
+		<img src="../image/willow.png" alt="" id="myImage" width="100px;">
+		<div class="" id="scrollDiv" style="height:200px;overflow:scroll">
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		</div>
+		<div style="width:200px;height:200px;border:1px solid black;" id="click-position">Client</div>
+		<div style="width:200px;height:200px;border:1px solid black;" id="page-position">Page</div>
+		<div style="width:200px;height:200px;border:1px solid black;" id="screen-position">Screen</div>
+		<div style="width:200px;height:200px;border:1px solid black;" id="key-div">修改健</div>
+
+		<div id="context-menu-container" style="height:500px;border:1px solid black">
+			<div id="right-click" style="height: 500px;background-color:pink">点击该区域，呼出自定义菜单。</div>
+			<ul id="menu" style="position:absolute;background-color:silver;">
+				<li>菜单一</li>
+				<li>菜单二</li>
+				<li>菜单三</li>
+			</ul>
+    <script type="text/javascript">
+    	/*
+			 * 13.2 事件处理程序
+			 */
+
+			 /* 13.2.1 HTML事件处理程序 */
+
+			 function showMessage() {
+				 alert("Hello World!");
+			 }
+
+			 /* 13.2.2 DOM0级事件处理程序 */
+
+			 var btn1 = document.getElementById("myBtn1");
+			 btn1.onclick = function() {
+				 console.log("Clicked");
+				 console.log(this.id);
+			 };
+
+			 /* 13.2.3 DOM2级事件处理程序 */
+
+			 var btn2 = document.getElementById("myBtn2");
+			 btn2.addEventListener("click", function() {
+				 console.log(this.id);
+			 }, false);
+			 btn2.addEventListener("click", function() {
+				 console.log("Hello, world!");
+			 }, false);
+
+			 /* 13.2.5 跨浏览器的事件处理程序 */
+
+			//  var EventUtil = {
+			// 	 addHandler: function(element, type, handler) {
+			// 		 if (element.addEventListener) {
+			// 			 element.addEventListener(type, handler, false);
+			// 		 } else if (element.attatchEvent) {
+			// 			 element.attatchEvent("on" + type + handler);
+			// 		 } else {
+			// 			 element["on" + type] = handler;
+			// 		 }
+			// 	 },
+			// 	 removeHandler: function(element, type, handler) {
+			// 		 if (element.removeEventListener) {
+			// 			 element.removeEventListener(type, handler, false);
+			// 		 } else if (element.detachEvent) {
+			// 			 element.detachEvent("on" + type, handler);
+			// 		 } else {
+			// 			 element["on" + type] = null;
+			// 		 }
+			// 	 }
+			//  };
+
+			//  var btn3 = document.getElementById("myBtn3");
+			//  var handler = function() {
+			// 	 	console.log("这是跨浏览器的事件处理");
+			// 		event.stopPropagation();
+			//  };
+			//  EventUtil.addHandler(btn3, "click", handler);
+			//  EventUtil.removeHandler(btn3, "click", handler);
+
+			 /*
+			  * 13.3 事件对象
+				*/
+
+				/* 13.3.1 DOM中的事件对象 */
+
+				var btn4 = document.getElementById("myBtn4");
+				btn4.addEventListener("click", function(event) {
+					console.log("bubbles:" + event.bubbles);
+					console.log("cancelable:" + event.cancelable);
+					console.log("detail:" + event.detail);
+					console.log("eventPhase:" + event.eventPhase);
+					console.log("type:" + event.type);
+				}, true);
+
+				// document.body.onclick = function() {
+				// 	console.log(event.currentTarget == document.body);
+				// 	console.log(this == document.body);
+				// 	console.log(event.target == document.getElementById("myBtn1"));
+				// };
+
+				var btn5 = document.getElementById("myBtn5");
+				var handlerX = function(event) {
+					switch(event.type) {
+						case "click":
+							console.log("Clicked");
+							break;
+						case "mouseover":
+							event.target.style.backgroundColor = "red";
+							break;
+						case "mouseout":
+							event.target.style.backgroundColor = "";
+							break;
+					}
+				};
+				btn5.onclick = handlerX;
+				btn5.onmouseover = handlerX;
+				btn5.onmouseout = handlerX;
+
+				/* 13.3.2 IE中的事件对象 */
+
+				/* 13.3.3 跨浏览器的事件对象 */
+
+				var EventUtil = {
+					addHandler: function(element, type, handler) {
+	 					 if (element.addEventListener) {
+	 						 element.addEventListener(type, handler, false);
+	 					 } else if (element.attatchEvent) {
+	 						 element.attatchEvent("on" + type + handler);
+	 					 } else {
+	 						 element["on" + type] = handler;
+	 					 }
+	 				 },
+					 removeHandler: function(element, type, handler) {
+  					 if (element.removeEventListener) {
+  						 element.removeEventListener(type, handler, false);
+  					 } else if (element.detachEvent) {
+  						 element.detachEvent("on" + type, handler);
+  					 } else {
+  						 element["on" + type] = null;
+  					 }
+  				 },
+					getEvent: function(event) {
+						return event ? event : window.event;
+					},
+					getTarget: function(event) {
+						return event.target || event.scrElement;
+					},
+					preventDefault: function(event) {
+						if (event.preventDefault) {
+							event.preventDefault();
+						} else {
+							event.returnValue = false;
+						}
+					},
+					stopPropagation: function(event) {
+						if (event.stopPropagation) {
+							event.stopPropagation();
+						} else {
+							event.cancelableBubble = true;
+						}
+					}
+				};
+
+				var btn6 = document.getElementById("myBtn6");
+				btn6.onclick = function(event) {
+					event = EventUtil.getEvent(event);
+					target = EventUtil.getTarget(event);
+					console.log();
+				};
+
+				var link = document.getElementById("link");
+				link.onclick = function(event) {
+					var event = EventUtil.getEvent(event);
+					EventUtil.preventDefault(event);
+				};
+
+				/*
+				 * 13.4 事件类型
+				 */
+
+				/* 13.4.1 UI事件 */
+
+				EventUtil.addHandler(window, "load", function(event) {
+					console.log("Loaded!");
+				});
+
+				var myImage = document.getElementById("myImage");
+				EventUtil.addHandler(myImage, "load", function(event) {
+					var event = EventUtil.getEvent(event);
+					console.log(EventUtil.getTarget(event).src);
+				});
+
+				EventUtil.addHandler(window, "unload", function(event) {
+					// alert("Unloaded!");
+					console.log("Unloaded!");
+				});
+
+				// EventUtil.addHandler(window, "resize", function(event) {
+				// 	console.log("Resized");
+				// });
+				// EventUtil.addHandler(window, "scroll", function(event) {
+					// if (document.compatMode == "CSS1Compat") {
+					// 	console.log(document.documentElement.scrollTop);
+					// } else {
+						// console.log(document.body.scrollTop);
+					// }
+				// });
+
+				/* 13.4.2 焦点事件 */
+
+				var supportFocusEvent = document.implementation.hasFeature("FocusEvent", "3.0");
+
+				/* 13.4.3 鼠标与滚轮事件 */
+
+				var clickDiv = document.getElementById("click-position");
+				clickDiv.onclick = function(event) {
+					console.log("Client coordinates: (" + event.clientX + ", " + event.clientY + ")");
+				};
+
+				var pageDiv = document.getElementById("page-position");
+				pageDiv.onclick = function(event) {
+					console.log("Page coordinates: (" + event.pageX + ", " + event.pageY + ")");
+				};
+
+				var screenDiv = document.getElementById("screen-position");
+				screenDiv.onclick = function(event) {
+					console.log("Screen coordinates: (" + event.screenX + ", " + event.screenY + ")");
+				};
+
+				var keyDiv = document.getElementById("key-div");
+				keyDiv.onclick = function(event) {
+					var keys = new Array();
+					if (event.shiftKey) {
+						keys.push("shift");
+					}
+					if (event.ctrlKey) {
+						keys.push("ctrl");
+					}
+					if (event.altKey) {
+						keys.push("alt");
+					}
+					if (event.metaKey) {
+						keys.push("meta");
+					}
+					console.log("Keys: " + keys.join("|"));
+				};
+
+				var getButton = function(event) {
+					if (document.implementation.hasFeature("MouseEvents", "2.0")) {
+						return event.button;
+					} else {
+						switch(event.button) {
+							case 0:
+							case 1:
+							case 3:
+							case 7:
+								return 0;
+							case 2:
+							case 6:
+								return 2;
+							case 4:
+								return 1;
+						}
+					}
+				};
+
+				/* 13.4.7 HTML5事件 */
+
+				var div = document.getElementById("right-click");
+				var menu = document.getElementById("menu");
+				EventUtil.addHandler(div, "contextmenu", function(event) {
+					event.preventDefault();
+					console.log("右键点击");
+					menu.style.left = event.pageX + "px";
+					menu.style.top = event.pageY + "px";
+					menu.style.visibility = "visibility";
+				});
+				// EventUtil.addHandler(document, "click", function(event) {
+				// 	document.getElementById("menu").style.visibility = "hidden";
+				// });
+
+				EventUtil.addHandler(window, "beforeunload", function(event) {
+					event.returnValue = "你的离开让我想念"
+					return "你的离开让我想念";
+				});
+    </script>
+  </body>
+</html>

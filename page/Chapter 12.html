@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <title>第十二章 DOM2和DOM3</title>
+    <link rel="stylesheet" href="../css/Chapter 12.css">
+    <script type="text/javascript" src=""></script>
+		<style>
+			#my-div {
+				background-color: blue;
+				width: 100px;
+				height: 200px;
+				border: 1px solid black;
+			}
+			.box {
+				background-color: black;
+				width: 50px;
+				height: 50px;
+				border: 1px solid green;
+			}
+		</style>
+  </head>
+  <body>
+		<div id="my-div" style="background-color:pink;width:300px;height:300px;overflow:scroll;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+		<div class="box"></div>
+		<div class="box"></div>
+    <script type="text/javascript">
+			/*
+			 * 12.1 DOM变化
+			 */
+
+			 var supportDOM2Core = document.implementation.hasFeature("Core", "2.0");
+			 var supportDOM3Core = document.implementation.hasFeature("Core", "3.0");
+			 var supportDOM2HTML = document.implementation.hasFeature("HTML", "2.0");
+			 var supportDOM2Views = document.implementation.hasFeature("Views", "2.0");
+
+			 /*
+			  * 12.2 样式
+				*/
+
+				var supportDOM2CSS = document.implementation.hasFeature("CSS", "2.0");
+				var supportDOM2CSS2 = document.implementation.hasFeature("CSS2", "2.0");
+
+				/* 12.2.1 访问元素的样式 */
+
+				var div = document.getElementById("my-div");
+
+				// console.log(div.style.backgroundColor);
+				// console.log(div.style.width);
+				// console.log(div.style.height);
+
+				// var prop, value, i, len;
+				// for (i = 0, len = div.style.length; i < len; i++) {
+				// 	prop = div.style[i]
+				// 	value = div.style.getPropertyValue(prop);
+				// 	console.log(prop + ": " + value);
+				// }
+				// div.style.removeProperty("background-color");
+
+				// var computedStyle = document.defaultView.getComputedStyle(div, null);
+				// console.log(computedStyle.backgroundColor);
+				// console.log(computedStyle.width);
+				// console.log(computedStyle.height);
+				// console.log(computedStyle.border);
+
+				// var computedStyle = div.currentStyle;
+				// console.log(computedStyle.backgroundColor);
+				// console.log(computedStyle.width);
+				// console.log(computedStyle.height);
+				// console.log(computedStyle.border);
+
+				/* 12.2.2 操作样式表 */
+
+				var supportDOM2StyleSheets = document.implementation.hasFeature("StyleSheets", "2.0");
+
+				// var sheet = null;
+				// for (var i = 0, len = document.styleSheets.length; i < len; i++) {
+				// 	sheet = document.styleSheets[i];
+				// 	console.log(sheet.href);
+				// }
+
+				// function getStyleSheet(element) {
+				// 	return element.sheet || element.styleSheet;
+				// }
+				// var link = document.getElementsByTagName("link")[0];
+				// var sheet = getStyleSheet(link);
+
+				// var sheet = document.styleSheets[1];
+				// var rules = sheet.cssRules || sheet.rules;
+				// var rule = rules[1];
+				// console.log(rule.selectorText);
+				// console.log(rule.style.cssText);
+				// console.log(rule.style.backgroundColor);
+				// console.log(rule.style.width);
+				// console.log(rule.style.height);
+
+				// rule.style.backgroundColor = "red";
+
+				// function insertRule(sheet, selectorText, csstext, position) {
+				// 	if (sheet.insertRule) {
+				// 		sheet.insertRule(selectorText + "{" + cssText + "}", position);
+				// 	} else if (sheet.addRule) {
+				// 		sheet.addRule(selectorText, cssText, position);
+				// 	}
+				// }
+				//
+				// function deleteRule(sheet, index) {
+				// 	if (sheet.deleteRule) {
+				// 		sheet.deleteRule(index);
+				// 	} else if(sheet.removeRule) {
+				// 		sheet.removeRule(index);
+				// 	}
+				// }
+
+				/* 12.2.3 元素大小 */
+
+				// function getElementLeft(element) {
+				// 	var actualLeft = element.offsetLeft;
+				// 	var current = element.offsetParent;
+				// 	while (current !== null) {
+				// 		acutalLeft += current.offsetLeft;
+				// 		current = current.offsetParent;
+				// 	}
+				// 	return actualLeft;
+				// }
+				// function getElementTop(element) {
+				// 	var actualTop = element.offsetTop;
+				// 	var current = element.offsetParent;
+				// 	while (current !== null) {
+				// 		acutalTop += current.offsetTop;
+				// 		current = current.offsetParent;
+				// 	}
+				// 	return actualTop;
+				// }
+
+				// function getViewport() {
+				// 	if (document.compatMode == "BackCompat") {
+				// 		return {
+				// 			width: document.body.clientWidth,
+				// 			height: document.body.clientHeight
+				// 		};
+				// 	} else {
+				// 		return {
+				// 			width: document.documentElement.clientWidth,
+				// 			height: document.documentElement.clientHeight
+				// 		};
+				// 	}
+				// }
+				// console.log(getViewport());
+
+				var docHeight = Math.max(document.documentElement.scrollHeight, document.body.clientHeight);
+				var docWidth = Math.max(document.documentElement.scrollWidth, document.body.clientWidth);
+
+				function scrollToTop(element) {
+					if (element.scrollTop != 0) {
+						element.scrollTop = 0;
+					}
+				}
+    </script>
+  </body>
+</html>

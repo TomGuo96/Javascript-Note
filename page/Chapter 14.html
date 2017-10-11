@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>第十四章 表单脚本</title>
+		<style>
+			table {
+				border-collapse: collapse;
+				text-align: center;
+			}
+			table td {
+				border: 1px solid black;
+			}
+		</style>
+	</head>
+	<body>
+		<form id="form-register" name="register" action="" method="post">
+			<table>
+				<tr>
+					<td><label for="name">请输入您的姓名：</lable></td>
+					<td><input type="text" name="name" id="name" autofocus required ></td>
+				</tr>
+				<tr>
+					<td><label for="number">请输入您的电话号码：</lable></td>
+					<td><input type="text" name="number" id="number" pattern="\d+"></td>
+				</tr>
+				<tr>
+					<td><label for="color">颜色：</lable></td>
+					<td>
+						<lable><input type="radio" id="color" name="color[]" value="green">绿色</lable>
+						<lable><input type="radio" id="color" name="color[]" value="yellow">黄色</lable>
+						<lable><input type="radio" id="color" name="color[]" value="red">红色</lable>
+					</td>
+				</tr>
+				<tr>
+					<td><label for="txt">请输入一行文字：</lable></td>
+					<td><input type="text" name="txt" id="txt" value="这是您输入文字的地方" size="10" maxlength="20"></td>
+				</tr>
+				<tr>
+					<td><label for="area">请输入一段文字：</lable></td>
+					<td><textarea name="area" id="area" cols="5" rows="3"></textarea></td>
+				</tr>
+				<tr>
+					<td rowspan="3">在右侧输入你的电话号码：</td>
+					<td><input type="text" name="tel1" name="txtTel1" id="txtTel1" maxlength="3"></td>
+				</tr>
+				<tr>
+					<td><input type="text" name="tel2" name="txtTel2" id="txtTel2" maxlength="4"></td>
+				</tr>
+				<tr>
+					<td><input type="text" name="tel3" name="txtTel3" id="txtTel3" maxlength="4"></td>
+				</tr>
+				<tr>
+					<td><label for="email">邮箱</label></td>
+					<td><input type="email" name="email" id="email"></td>
+				</tr>
+				<tr>
+					<td><label for="url">网址</label></td>
+					<td><input type="url" name="url" id="url"></td>
+				</tr>
+				<tr>
+					<td><label for="num">数字</label></td>
+					<td><input type="number" name="num" id="num" min="0" max="100" step="20"></td>
+				</tr>
+				<tr>
+					<td><label for="selLocation">您的坐标：</label></td>
+					<td>
+						<select id="selLocation" name="location" size="1">
+							<option value="中国">中国</option>
+							<option value="韩国">韩国</option>
+							<option value="日本">日本</option>
+							<option value="美国">美国</option>
+							<option value="朝鲜">朝鲜</option>
+							<option value="蒙古">蒙古</option>
+							<option value="英国">英国</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="提交表单"><input type="submit" value="提交不验证表单" formnovalidate></td>
+					<td><input type="image" src="willow.png" height="50px"></td>
+				</tr>
+			</table>
+		</form>
+		<iframe name="richedit" src="blank.html"></iframe>
+		<div id="edit" contenteditable style="width:300px;height:200px;border:1px solid black;">更加简单的富文本编辑姿势</div>
+		<div id="edit-option">
+			<button id="bold">加粗</button>
+			<button id="backcolor">红色背景</button>
+		</div>
+		<script>
+			// var form = document.forms["register"];
+			// console.log(form.elements["color"][0]);
+			// // form.elements["name"].disabled = "";
+			// console.log(form.elements["name"].disabled);
+			// form.elements["name"].disabled = false;
+			// console.log(form.elements["color"][1].tabIndex);
+
+			// var textbox = document.forms["register"].elements["number"];
+			// textbox.addEventListener("focus", function(event) {
+			// 	this.style.backgroundColor = "yellow";
+			// 	this.select();
+			// });
+			// textbox.addEventListener("blur", function(event) {
+			// 	if (/[^\d]/.test(this.value)) {
+			// 		this.style.backgroundColor = "red";
+			// 	} else {
+			// 		this.style.backgroundColor = "";
+			// 	}
+			// });
+			// textbox.addEventListener("change", function(event) {
+			// 	if (/[^\d]/.test(this.value)) {
+			// 		this.style.backgroundColor = "red";
+			// 	} else {
+			// 		this.style.backgroundColor = "";
+			// 	}
+			// });
+
+			// document.forms["register"].elements["name"].addEventListener("keypress", function(event) {
+			// 	event.preventDefault();
+			// });
+
+			function tabForward(event) {
+				if (this.value.length == this.maxLength) {
+					for (var i = 0, len = this.form.elements.length; i < len; i++) {
+						if (this.form.elements[i] == this) {
+							if (this.form.elements[i + 1]) {
+								this.form.elements[i + 1].focus();
+							}
+							return;
+						}
+					}
+				}
+			}
+			document.getElementById("txtTel1").addEventListener("keyup", tabForward);
+			document.getElementById("txtTel2").addEventListener("keyup", tabForward);
+			document.getElementById("txtTel3").addEventListener("keyup", tabForward);
+
+			// var userName = document.forms["register"].elements["name"];
+			// console.log(userName.required);
+			// console.log("required" in document.createElement("input"));
+			// console.log(typeof document.createElement("input").required == "boolean");
+
+			// var isPatternSupported = "pattern" in document.createElement("input");
+			// console.log(isPatternSupported);
+
+			var selectbox = document.forms["register"].elements["selLocation"];
+			// for (var i = 0, len = selectbox.options.length; i < len; i++) {
+			// 	if (selectbox.options[i].selected == true) {
+			// 		console.log(selectbox.options[i].value);
+			// 	}
+			// }
+
+			var richeidt = document.getElementById("edit");
+			document.getElementById("bold").addEventListener("click", function(event) {
+				document.execCommand("bold", false, null);
+			});
+			document.getElementById("backcolor").addEventListener("click", function() {
+				document.execCommand("backcolor", false, "#f00");º
+			});
+			document.execCommand("italic", false, null);
+			document.execCommand("createlink", false, "http://www.baidu.com");
+		</script>
+	</body>
+</html>

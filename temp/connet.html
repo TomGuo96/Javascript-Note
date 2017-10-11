@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <title>Ajax对象的使用</title>
+    <link rel="stylesheet" href="">
+    <script type="text/javascript" src=""></script>
+  </head>
+  <body>
+		<form action="" method="get">
+			<table>
+				<tr>
+					<td><label for="userName">姓名：</label></td>
+					<td><input type="text" name="userName" id="userName" value=""></td>
+				</tr>
+				<tr>
+					<td><label for="userTel">电话：</label></td>
+					<td><input type="text" name="userTel" id="userTel" value=""></td>
+				</tr>
+			</table>
+		</form>
+		<button type="button" name="button" id="button-add">添加</button>
+		<button type="button" name="button" id="button-get">查询</button>
+		<div id="myDiv1"></div>
+		<div id="myDiv2"></div>
+    <script>
+			/**
+			 * 创建XHR对象
+			 * @return XHR对象
+			 */
+			function XHR() {
+				if (window.XMLHttpRequest) {
+					return new XMLHttpRequest();
+				} else {
+					return new ActiveXObject("Microsoft.XMLHTTP");
+				}
+			}
+
+			/**
+			 * Get方法
+			 * @param url 脚本地址
+			 * @param query 查询字符串，包含问号
+			 * @param callback 	请求成功时的回调函数
+			 * @return
+			 */
+			function HttpGet(url, query, callback) {
+				var xhr = new XHR();
+				xhr.open("GET", url + serialize(query), true);
+				xhr.send();
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState == 4 && xhr.status == 200) {
+						callback(JSON.parse(xhr.responseText));
+					}
+				}
+			}
+
+			/**
+			 * Post方法
+			 * @param url 脚本地址
+			 * @param query 查询字符串，包含问号
+			 * @param callback 	请求成功时的回调函数
+			 * @return
+			 */
+			function HttpPost(url, query, callback) {
+				var xhr = new XHR();
+				xhr.open("POST", url, true);
+				xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				xhr.send(serialize(query).slice(1));
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState == 4 && xhr.status == 200) {
+						callback(JSON.parse(xhr.responseText));
+					}
+				}
+			}
+
+			/**
+			 * 序列化查询字符串
+			 * @param qeury 查询字符串对象
+			 * @return 查询字符串
+			 */
+			 function serialize(query) {
+				 var result = "";
+				 var name = "";
+				 for (name in query) {
+					 result += "&" + name + "=" + query[name];
+				 }
+				 result = result.slice(1);
+				 result = "?" + result;
+				 return result;
+			 }
+
+			function show(rst) {
+				document.getElementById("myDiv1").innerText = "姓名：" + rst.name;
+				document.getElementById("myDiv2").innerText = "电话：" + rst.tel;
+			}
+			// document.getElementById("button-add").addEventListener("click", function() {
+			// 	var form = document.forms[0];
+			// 	var name = form["userName"].value;
+			// 	var tel = form["userTel"].value;
+			// 	HttpGet("data-add.php", {
+			// 		name: name,
+			// 		tel: tel
+			// 	}, show);
+			// });
+			document.getElementById("button-get").addEventListener("click", function() {
+				var form = document.forms[0];
+				var name = form["userName"].value;
+				var tel = form["userTel"].value;
+				HttpPost("data-get.php", {
+					name: name,
+					tel: tel
+				}, showData);
+			});
+			function showData(dataObj) {
+				console.log(dataObj);
+				var x = document.createElement("div");
+				for (var i = 0; i < dataObj.length; i++) {
+					var div = document.createElement("div");
+					div.innerText = "第" + i + "个：姓名：" +dataObj[i].name + " 电话：" + dataObj[i].tel;
+					x.appendChild(div);
+				}
+				document.body.appendChild(x);
+				document.getElementById("button-get").disabled  = true;
+			}
+    </script>
+  </body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>第十章 节点层次</title>
+	</head>
+	<body>
+		<div>
+			<div id="x" style="color:pink;" onclick="console.log('clicked');"><span>Original First One</span><span>Original Last One</span></div>
+			<p></p>
+			<ul id="ul">
+				<li id="xxx">xxx</li>
+				<li>yyy</li>
+			</ul>
+		</div>
+		<div id="comment"><!-- This is a comment. --></div>
+		<script>
+			/*
+			 * 10.1 节点层次
+			 */
+
+			// 10.1.1 节点类型
+
+			// function convertToArray(nodes) {
+			// 	var array = null;
+			// 	try {
+			// 		array = Array.prototype.slice.call(nodes, 0);
+			// 	} catch (e) {
+			// 		array = new Array();
+			// 		for (var i = 0; i < nodes.length; i++) {
+			// 			array.push(nodes[i]);
+			// 		}
+			// 	}
+			// 	return array;
+			// }
+
+			// var someNode = document.getElementById("x");
+			// if (someNode.nextSibling == null) {
+			// 	console.log("Last node in the parent's childNodes list.");
+			// } else if (someNode.previousSibling = null) {
+			// 	console.log("First node in the parent's childNodes list.");
+			// }
+
+			// var returnedNode = someNode.appendChild(newNode);
+			// console.log(returnedNode == newNode);
+			// console.log(someNode.lastChild == newNode);
+
+			// var someNode = document.getElementById("x");
+			// var returnedNode = someNode.appendChild(someNode.firstChild);
+			// console.log(returnedNode == someNode.firstChild);
+			// console.log(returnedNode == someNode.lastChild);
+
+			// returnedNode = someNode.insertBefore(newNode, null);
+			// console.log(newNode == someNode.lastChild);
+			// returnedNode = someNode.insertBefore(newNode, someNode.firstChild);
+			// console.log(returnedNode == newNode);
+			// console.log(newNode == someNode.firstChild);
+			// returnedNode = someNode.insertBefore(newNode, someNode.lastChild);
+			// console.log(newNode == someNode.childNodes[someNode.childNodes.length-2]);
+
+			// var returnedNode = someNode.replaceChild(newNode, someNode.firstChild);
+			// var returnedNode = someNode.removeChild(someNode.firstChild);
+
+			// var ul = document.getElementById("ul");
+			// var deepList = ul.cloneNode(true);
+			// console.log(deepList);
+			// var shallowList = ul.cloneNode();
+			// console.log(shallowList);
+
+			// 10.1.2 Document类型
+
+			// var html = document.documentElement;
+			// console.log(html);
+
+			// var originalTitle = document.title;
+			// document.title = "New page title";
+			//
+			// var url = document.URL;
+			// var domain = document.domain;
+			// var referrer = document.referrer;
+			// console.log(decodeURIComponent(url));
+			// console.log(domain);
+			// console.log(referrer);
+
+			// window.onload = function() {
+			// 	document.write("Hello, world!");
+			// }
+
+			// 10.1.3 Element类型
+
+			// var p = document.createElement("p");
+			// console.log(p.tagName + "p");
+			// console.log(p.nodeName+ "p");
+
+			// var ul = document.getElementById("x");
+			// console.log(ul.getAttribute("style"));
+			// console.log(typeof ul.getAttribute("style"));
+			// console.log(ul.style);
+			// console.log(typeof ul.style);
+			// console.log(ul.getAttribute("onclick"));
+			// console.log(typeof ul.getAttribute("onclick"));
+			// console.log(ul.onclick);
+			// console.log(typeof ul.onclick);
+
+			// // ElementAttributesExample03.htm
+			// function outputAttributes(ele) {
+			// 	var pairs = new Array();
+			// 	var attrName;
+			// 	var attrValue;
+			// 	var i;
+			// 	var len = ele.attributes.length;
+			// 	for (i = 0; i < len; i++) {
+			// 		attrName = ele.attributes[i].nodeName;
+			// 		attrValue = ele.attributes[i].nodeValue;
+			// 		pairs.push(attrName + "=\"" + attrValue + "\"");
+			// 	}
+			// 	return pairs.join(" ");
+			// }
+			// console.log(outputAttributes(document.getElementById("x")));
+
+			// 10.1.4 Text类型
+
+			// var xxx = document.getElementById("xxx");
+			// xxx.firstChild.nodeValue = "<span></span>";
+
+			// var div = document.getElementById("comment");
+			// var comment = div.firstChild;
+			// console.log(comment.data);
+			// console.log(comment.data.length);
+
+		</script>
+	</body>
+</html>

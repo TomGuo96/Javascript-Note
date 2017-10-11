@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <title>第五章 引用类型</title>
+    <link rel="stylesheet" href="">
+    <script type="text/javascript" src=""></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+    	// var colors = ["red", "green", "blue"];
+			// console.log(colors.toString());
+			// console.log(colors.valueOf());
+
+			/*
+			 * Date类型
+			 */
+
+			//  var someDate = new Date("May 25, 2005");
+			//  var start = new Date();
+			//  console.log(someDate);
+			//  setTimeout(function() {
+			// 	 var end = new Date();
+			// 	 console.log(end - start);
+			//  }, 1000);
+
+			 /*
+			  * 5.4 RegExp类型
+				*/
+
+				/* 5.4.1 实例属性 */
+
+				// var pattern1 = /\[bc\]at/i;
+				// console.log(pattern1.global);
+				// console.log(pattern1.ignoreCase);
+				// console.log(pattern1.multiline);
+				// console.log(pattern1.lastIndex);
+				// console.log(pattern1.source);
+				//
+				// var pattern2 = new RegExp("\\[bc\\]at", "i");
+				// console.log(pattern2.global);
+				// console.log(pattern2.ignoreCase);
+				// console.log(pattern2.multiline);
+				// console.log(pattern2.lastIndex);
+				// console.log(pattern2.source);
+
+				/* 5.4.2 RegExp的实例方法 */
+
+				// var text = "mom and dad and baby";
+				// var pattern = /mom( and dad( and baby)?)?/gi;
+				// var matches = pattern.exec(text);
+				// console.log(matches);
+
+				// 非全局模式
+				// var text = "cat, bat, sat, fat";
+				// var pattern1 = /.at/;
+				// var matches = pattern1.exec(text);
+				// console.log(matches);
+				// console.log(pattern1.lastIndex);
+				// matches = pattern1.exec(text);
+				// console.log(matches);
+				// console.log(pattern1.lastIndex);
+
+				// 全局模式
+				// var text = "cat, bat, sat, fat";
+				// var pattern2 = /.at/g;
+				// var matches = pattern2.exec(text);
+				// console.log(matches);
+				// console.log(pattern2.lastIndex);
+				// matches = pattern2.exec(text);
+				// console.log(matches);
+				// console.log(pattern2.lastIndex);
+
+				var tel = "000-0000-0000";
+				var pattern = /\d{3}-\d{4}-\d{4}/;
+				if (pattern.test(tel)) {
+					console.log("The pattern was matched.");
+				}
+    </script>
+  </body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <title>第二十二章 高级技巧</title>
+    <link rel="stylesheet" href="">
+    <script type="text/javascript" src=""></script>
+  </head>
+  <body>
+		<button id="btn1">按钮一</button>
+		<button id="btn2">按钮二</button>
+		<button id="btn3">按钮三</button>
+		<div id="move-div"  style="width:100px;height:100px;background-color:pink;position:relative;left:0">
+
+		</div>
+    <script type="text/javascript">
+			var handler1 = {
+				message: "Event handled",
+				handleClick: function(event) {
+					alert(this.message);
+				}
+			};
+			var btn1 = document.getElementById("btn1");
+			btn1.addEventListener("click", handler1.handleClick);
+
+			var handler2 = {
+				message: "Event handled",
+				handleClick: function(event) {
+					alert(this.message);
+				}
+			};
+			var btn2 = document.getElementById("btn2");
+			btn2.addEventListener("click", function(event) {
+				handler2.handleClick(event);
+			});
+
+			function bind(fn, context) {
+				return function() {
+					return fn.apply(context, arguments);
+				};
+			}
+			var handler3 = {
+				message: "Event handled",
+				handleClick: function(event) {
+					alert(this.message);
+				}
+			};
+			var btn3 = document.getElementById("btn3");
+			btn3.addEventListener("click", bind(handler3.handleClick, handler3));
+
+			/* 22.1.5 函数的柯里化 */
+
+			function curry(fn) {
+				var args = Array.prototype.slice.call(arguments, 1);
+				return function() {
+					var innerArgs = Array.prototype.slice.call(arguments);
+					var finalArgs = args.concat(innerArgs);
+					return fn.apply(null, finalArgs);
+				};
+			}
+
+			function bind(fn, context) {
+				var args = Array.prototype.slice.call(arguments, 2);
+				return function() {
+					var innerArgs = Array.prototype.slice.call(arguments);
+					var finalArgs = args.concat(innerArgs);
+					return fn.apply(context, finalArgs);
+				};
+			}
+
+			/*
+			 * 22.2 防篡改对象
+			 */
+
+			 /* 22.2.1 不可拓展对象 */
+
+			//  var obj = {
+			// 	 name: "Nickolas"
+			//  };
+			//  Object.preventExtensions(obj);
+			//  obj.age = 20;
+			//  console.log(obj.age);
+			//  console.log(Object.isExtensible(obj));
+
+			 /* 22.2.2 密封的对象 */
+
+			//  var obj = {
+			// 	 name: "Nicholas"
+			//  };
+			//  Object.seal(obj);
+			//  obj.age = 29;
+			//  console.log(obj.age);
+			//  delete obj.name;
+			//  console.log(obj.name);
+			//  console.log(Object.isSealed(obj));
+			//  console.log(Object.isExtensible(obj));
+
+			 /* 22.2.3 冻结的对象 */
+
+			 var obj = {
+				 name: "Nicholas"
+			 };
+			 Object.freeze(obj);
+			 obj.age = 29;
+			 console.log(obj.age);
+			 delete obj.name;
+			 console.log(obj.name);
+			 obj.name = "Greg";
+			 console.log(obj.name);
+			 console.log(Object.isExtensible(obj));
+			 console.log(Object.isSealed(obj));
+			 console.log(Object.isFrozen(obj));
+
+			 /*
+			  * 22.3 高级定时器
+				*/
+
+				/* 22.3.1 重复的定时器 */
+
+				var movingDiv = document.getElementById("move-div")
+				setTimeout(function() {
+					var left = parseInt(movingDiv.style.left) + 5;
+					if (left > 500) {
+						movingDiv.style.left = "500px";
+					} else {
+						movingDiv.style.left = left + "px";
+						setTimeout(arguments.callee, 50)
+					}
+				}, 50);
+    </script>
+  </body>
+</html>

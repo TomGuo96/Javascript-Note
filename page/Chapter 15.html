@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>第十五章 使用Canvas绘图</title>
+		<style>
+			canvas {
+				border: 1px solid black;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<img src="../image/willow_piece.png">
+		</div>
+		<canvas id="canvas" width="500" height="500">你的浏览器不支持Canvas</canvas>
+		<div>
+			<button id="btn">生成灰阶图</button>
+		</div>
+		<script>
+			var drawing = document.getElementById("canvas");
+			var context = null;
+			if(drawing.getContext) {
+				context = drawing.getContext("2d");
+			}
+			// context.strokeStyle = "red";
+			// context.fillStyle = "#0000ff";
+			// context.fillRect(0, 0, 500, 500);
+			// var imgUrl = drawing.toDataURL("image/png");
+			// var image = document.createElement("img");
+			// image.src = imgUrl;
+			// document.body.appendChild(image);
+
+			context.fillStyle = "#ff0000";
+			context.fillRect(0, 0, 100, 100);
+			context.fillStyle = "rgba(0, 0, 255, 0.5)";
+			context.fillRect(50, 50, 100, 100);
+
+			context.strokeStyle = "#ff0000";
+			context.strokeRect(150, 0, 100, 100);
+			context.strokeStyle = "rgba(0, 0, 255, 0.5)";
+			context.strokeRect(200, 50, 100, 100);
+
+			context.clearRect(65, 65, 20, 20);
+
+			context.strokeStyle = "#000000";
+			context.beginPath();
+			context.arc(100, 250, 99, 0, 2 * Math.PI, false);
+			context.moveTo(100, 344);
+			context.arc(100, 250, 94, -Math.PI * 3 / 2, 2 * Math.PI, false);
+			context.moveTo(100, 250);
+			context.lineTo(100, 170);
+			context.moveTo(100, 250);
+			context.lineTo(50, 250);
+			context.stroke();
+			// console.log(context.isPointInPath(100, 50));
+
+			context.font = "bold 14px Arial";
+			context.textAlign = "center";
+			context.textBaseline = "bottom";
+			context.fillText("12", 100, 170);
+			context.textAlign = "start";
+			context.fillText("12", 100, 190);
+			context.textAlign = "end";
+			context.fillText("12", 100, 210);
+			// console.log(context.measureText("Hello world!").width);
+
+			// context.shadowOffsetX = 5;
+			context.shadowOffsetY = 5;
+			context.shadowBlur = 4;
+			context.shadowColor = "rgba(0, 0, 0, 0,5)";
+			context.fillStyle = "#ff0000";
+			context.fillRect(300, 0, 100, 100);
+			context.fillStyle = "rgba(0, 0, 255, 1)";
+			context.fillRect(350, 50, 100, 100);
+
+			var image = new Image();
+			var image = document.images[0];
+			image.crossOrigin = "Anonymous";
+			// image.src = "willow_piece.png";
+			image.onload = function(event) {
+				var ptn = context.createPattern(image, "repeat");
+				context.fillStyle = ptn;
+				context.fillRect(200, 150, 250, 200);
+			};
+			document.getElementById("btn").onclick = function() {
+				var imageData = context.getImageData(200, 150, 250, 200);
+				var data = imageData.data;
+				var average = 0;
+				for(var i = 0; i < data.length; i += 4) {
+					red = data[i];
+					green = data[i + 1];
+					blue = data[i + 2];
+					alpha = data[i + 3];
+					average = Math.floor((red + green + blue) / 3);
+					data[i] = data[i + 1] = data[i + 2] = average;
+				}
+				imageData.data = data;
+				context.putImageData(imageData, 200, 150);
+			}
+
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>第十一章 DOM拓展</title>
+		<style>
+			div {
+				font-size: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="focus"><button id="button">点击显示中文区域</button></div>
+		<div id="data" data-app-id="2010"></div>
+		<script>
+			/*
+			 * 11.3 HTML5
+			 */
+
+			// 11.3.2 焦点管理
+
+			//  var button = document.getElementById("button");
+			// //  button.focus();
+			//  console.log(document.activeElement);
+			//  console.log(document.hasFocus());
+
+			// 11.3.3 HTMLDocument的变化
+
+			//  console.log(document.readyState);
+			//  console.log(document.compatMode);
+
+			// 11.3.4 字符集属性
+
+			// console.log(document.charset);
+			// console.log(document.defaultChar);
+
+			// 11.3.5 自定义数据属性
+
+			// var data = document.getElementById("data");
+			// console.log(data.dataset.appId);
+			// console.log(typeof data.dataset.appId);
+
+			document.querySelector("#button").addEventListener("click", function() {
+				var scroll = document.querySelector("#here");
+				scroll.scrollIntoView();
+				console.log(scroll);
+				console.log(typeof scroll.scrollIntoView);
+			});
+		</script>
+	</body>
+</html>

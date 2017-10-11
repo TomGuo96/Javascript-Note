@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <title>第二十三章 离线应用与客户端存储</title>
+    <link rel="stylesheet" href="">
+    <script type="text/javascript" src=""></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+    	var CookieUtil = {
+				get: function(name) {
+					var cookieName = encodeURIComponent(name) + "=";
+					var cookieStart = document.cookie.indexOf(cookieName);
+					var cookieValue = null;
+					if (cookieStart > -1) {
+						var cookieEnd = document.cookie.indexOf(";", cookieStart);
+						if (cookieEnd == -1) {
+							cookieEnd = document.cookie.length;
+						}
+						cookieValue = decodeURIComponent(document.cookie.substring(cookieStart + cookieName.length, cookieEnd))
+					}
+					return cookieValue;
+				},
+				set: function(name, value, expires, path, domain, secure) {
+					var cookieText = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+					if (expires instanceof Date) {
+						cookieText += "; expires=" + expires.toGMTString();
+					}
+					if (path) {
+						cookieText += "; path=" + path;
+					}
+					if (domain) {
+						cookieText += "; domain" + domain;
+					}
+					if (secure) {
+						cookieText += "; secure";
+					}
+					document.cookie = cookieText;
+				},
+				unset: function(name, path, domain, secure) {
+					this.set(name, "", new Date(0), path, domain, secure);
+				}
+			};
+
+			// CookieUtil.set("name", "Nicholas", new Date("2017-10-11"));
+			// CookieUtil.set("book", "Professional Javascript");
+			// console.log(CookieUtil.get("name"));
+			// console.log(CookieUtil.get("book"));
+
+			/* 23.3.3 Web存储机制 */
+
+			/* 23.3.4 IndexedDB */
+
+			var indexedDB = window.indexedDB || window.msIndexedDB || window.mozIndexedDB || window.webkitIndexedDB;
+
+			var request, database;
+			request = indexedDB.open("tom");
+			request.onerror = function(event) {
+				console.log("Something bad happened while trying to open: " + event.target.errorCode);
+			};
+			request.onsuccess = function(event) {
+				database = event.target.result;
+				console.log("数据库创建成功");
+				// 设置IndexedDB数据库版本号
+				if (database.version != "2.0") {
+					request = database.setVersion("2.0");
+					request.onerror = function(event) {
+						console.log("Something bad happened while trying to set version: " + event.target.errorCode);
+					};
+					request.onsuccess = function(event) {
+						console.log("Database initialization complete. Database name: " + database.name + ", Version: " + database.version);
+					};
+				} else {
+					console.log("Database already initialization. Database name: " + database.name + ", Version: " + database.version);
+				}
+			};
+
+			var users = [
+				{
+					username: "007",
+					firstName: "James",
+					lastName: "Bond",
+					password: "foo"
+				},
+				{
+					username: "008",
+					firstname: "Tom",
+					lastName: "Guo",
+					password: "rooney"
+				}
+			];
+
+			// 插入数据
+			function addUsers() {
+				var store = database.createObjectStore("users", {
+					keyPath: "username"
+				});
+				// var i = 0;
+				// var len = users.length;
+				// while (i < len) {
+				// 	store.add(users[i++]);
+				// }
+
+				var i = 0,
+				request ,
+				requests = [];
+				len = users.length;
+				while (i < len) {
+					request = store.put(users[i++]);
+					request.onerror = function() {
+						console.log("数据插入失败");
+					};
+					request.onsuccess = function() {
+						console.log("数据插入成功");
+					};
+					requests.push(request);
+				}
+			}
+			var store = database.createObjectStore("users", {
+				keyPath: "username"
+			});
+    </script>
+  </body>
+</html>
